@@ -11,23 +11,24 @@
     </header>
 
     <div class = "container">
-        <main>
-            <section class="card-container">
-                <div class="card">
-                    <div class="card-content">
-                        <h3>Model Editing at Scale: Impacts on Gradual and Catastrophic Forgetting</h3>
-                        <a href="paper1/index.html" class="button" style="text-decoration: none;"> View Paper 1</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-content">
-                        <h3>Rebuilding ROME : Resolving Model Collapse during Sequential Model Editing</h3>
-                        <a href="paper2/index.html" class="button" style="text-decoration: none;">View Paper 2</a>
-                    </div>
-                </div>
-                <!-- Add more cards for other papers as needed -->
+
+            <section id="introduction">
+                <h2>Introduction</h2>
+                <p>The project focuses on the advancement of model editing techniques for large language models, specifically examining their scalability and reliability when subject to multiple edits. Through rigorous testing on two prominent editing methods, ROME and MEMIT, the research uncovers that while these methods show promise in singular edits, their efficacy diminishes with scaling. The studies reveal the phenomena of both gradual and catastrophic forgetting, where the models progressively lose their ability to recall edited facts and perform tasks, eventually leading to a state where further editing becomes ineffective, and the model is rendered almost unusable. This work underscores the necessity for better evaluation metrics and methods that can handle extensive editing, maintaining the stability and utility of LLMs over time.</p>
             </section>
-        </main>
+            <section class="card-container">
+                <a href="paper1/index.html" class="card">
+                    <div class="card-content">
+                        <h2>Model Editing at Scale: Impacts on Gradual and Catastrophic Forgetting</h2>
+                    </div>
+                </a>
+                <a href="paper2/index.html" class="card">
+                    <div class="card-content">
+                        <h2>Rebuilding ROME: Resolving Model Collapse during Sequential Model Editing</h2>
+                    </div>
+                </a>
+            </section>
+
 
     </div>
 
