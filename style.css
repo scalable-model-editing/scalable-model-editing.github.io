@@ -1,0 +1,179 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+}
+h2 {
+    text-align: center;
+}
+
+header {
+    background: #054420;
+    color: #fff;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+header p {
+    color: #ddd;
+}
+
+nav {
+    background: #333;
+    color: #fff;
+}
+
+nav ul {
+    list-style: none;
+    overflow: hidden;
+    padding: 0;
+    text-align: center;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    padding: 10px 20px;
+    display: inline-block;
+}
+
+nav ul li a:hover,
+nav ul li a:focus {
+    background-color: #069c48;
+}
+
+section {
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+/* Additional styles for button-like links */
+a.button {
+    background-color: #069c48;
+    padding: 10px 15px;
+    color: white;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+a.button:hover {
+    background-color: #333;
+}
+
+/* Style for large screen sizes */
+@media (min-width: 768px) {
+    header h1 {
+        font-size: 3em;
+    }
+
+    nav ul li a {
+        padding: 20px 30px;
+    }
+
+    section {
+        padding: 40px;
+    }
+}
+
+.paper-link-container {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.paper-link-button {
+    background-color: #2c6b47; /* This matches the header color in your screenshots */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.paper-link-button:hover {
+    background-color: #333;
+}
+
+
+
+.container {
+    width: 70%; /* Adjust this percentage to control the width */
+    max-width: 1200px; /* This sets the maximum width of the container */
+    margin: 0 auto; /* Centers the container */
+    padding: 20px; /* Optional: Adds some space inside the container */
+    background-color: #fff; /* Optional: Sets the background color */
+}
+
+/* Add this to each section if they are not already wrapped in the container */
+header, nav, section, footer {
+    padding: 20px;
+    box-sizing: border-box; /* Ensures padding is included in width */
+}
+
+/* Use this class for the main content sections */
+.content-section {
+    background-color: #f4f4f4; /* Optional: Sets a different background color for content sections */
+    margin-bottom: 20px; /* Space between sections */
+    padding: 20px;
+    border-radius: 5px; /* Optional: Rounds corners of sections */
+}
+
+
+.contact-section {
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* This should match your body font */
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 20px; /* Adjust as necessary to fit your layout */
+}
+
+.contact-section .names {
+    font-size: 1.2em; /* Adjust size as needed */
+    margin: 0;
+    padding: 0;
+    font-weight: bold; /* Makes the font bold */
+}
+
+.contact-section .institution {
+    font-size: 1.1em; /* Adjust size as needed */
+    margin: 0;
+    padding: 0;
+}
+
+.contact-section .email {
+    font-size: 1em; /* Adjust size as needed */
+    margin: 0;
+    padding: 0;
+}
