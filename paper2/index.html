@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Editing at Scale</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Rebuilding ROME : Resolving Model Collapse during Sequential Model Editing</h1>
+        <!-- Include authors here if needed -->
+        <div class="contact-section">
+            <p class="names">Akshat Gupta, Gopala Anumanchipalli</p>
+            <p class="institution">UC Berkeley</p>
+            <p class="email">akshat.gupta@berkeley.edu</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="../">Home</a></li>
+            <li><a href="#abstract">Abstract</a></li>
+            <li><a href="#methods">Methods, Models, and Datasets</a></li>
+            <li><a href="#scalingROME">Scaling ROME</a></li>
+            <li><a href="#scalingMEMIT">Scaling MEMIT</a></li>
+            <li><a href="#conclusion">Conclusion</a></li>
+        </ul>
+    </nav>
+    <div class = "container">
+
+
+        <div class="paper-link-container">
+            <a href="https://arxiv.org/pdf/2403.07175.pdf" target="_blank" class="paper-link-button">Read Our Research Paper</a>
+        </div>
+
+
+        <section id="abstract">
+            <h2>Abstract</h2>
+            <p>Recent work on model editing using Rank-One
+                Model Editing (ROME), a popular model editing method, has shown that there are certain
+                facts that the algorithm is unable to edit without
+                breaking the model. Such edits have previously
+                been called disabling edits (Gupta et al., 2024).
+                These disabling edits cause immediate model
+                collapse and limits the use of ROME for sequential editing. In this paper, we make two
+                main contributions. Firstly, we show that model
+                collapse with ROME only happens when making edits using the CounterFact dataset (Meng
+                et al., 2022a) and does not happen when using
+                the zsRE dataset (Levy et al., 2017). Secondly,
+                we find that disabling edits are an artifact of
+                the original implementation of ROME. With
+                this paper, we provide a more stable implementation ROME, which we call r-ROME and
+                show that we no longer observe model collapse
+                when making large scale sequential edits with
+                ROME.</p>
+        </section>
+
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p>
+                Model editing in Large Language Models is essential as the knowledge they contain becomes outdated. This paper focuses on ROME, a parameter-modifying model editing method, highlighting the challenges of editing multiple facts and the occurrence of "disabling edits" that lead to model collapse during sequential editing.
+            </p>
+            <img src="Screenshot 2024-03-16 at 6.51.11 PM.png">
+
+        </section>
+
+        <section id="background">
+            <h2>Background</h2>
+            <p>
+                ROME is explored in-depth as a model editing approach that modifies model parameters. It is part of the "locate-and-edit" category, which involves identifying and modifying the weights of specific layers corresponding to stored knowledge. Disabling edits have caused model collapses in the past, an issue this paper aims to resolve.
+            </p>
+            <img src="Screenshot 2024-03-16 at 6.52.08 PM.png">
+        </section>
+
+        <section id="experiments">
+            <h2>Experiments</h2>
+            <p>
+                The experiments begin with identifying disabling edits using metrics such as generation entropy and the norm of the matrix update. The paper investigates why these disabling edits occur with ROME, particularly when using the CounterFact dataset, and not with the zsRE dataset. The re-implementation of ROME, named r-ROME, is introduced, showing no model collapse when making large-scale sequential edits.
+            </p>
+            <h4>
+                Metrics to Identify Disabling Edits
+            </h4>
+            <p>
+                The researchers introduced two metrics to spot disabling edits: normalized matrix update norm (|Δ|) and generation entropy. Disabling edits were characterized by an unusually large update norm, and generation entropy was employed to identify when models repetitively generated text, indicating a collapse. The study observed that disabling edits were specific to the CounterFact dataset edits and not present with the zsRE dataset.
+            </p>
+            <img src="Screenshot 2024-03-16 at 6.53.58 PM.png">
+            <h4>
+                Searching for Disabling Edits
+            </h4>
+            <p>
+                A series of large-scale singular edits using ROME on GPT2-XL and GPT-J models was conducted with two datasets, CounterFact and zsRE. The results confirmed that disabling edits appeared only in the CounterFact dataset. It was surmised that the disabling edits' presence might be due to the nature of the facts in the dataset, the style of prompts used, or the one-word nature of the CounterFact edits.
+            </p>
+            <img src="Screenshot 2024-03-16 at 6.54.21 PM.png" style="width: 50%; display: block; margin: auto;">
+            <h4>
+                Fixing Disabling Edits
+            </h4>
+            <p>
+                The research team re-implemented ROME, creating r-ROME, and found that it did not result in disabling edits. The new implementation's updates were smaller in norm and did not lead to the previously observed model collapse. The performance of r-ROME matched the original on standard model editing metrics while eliminating the risk of disabling edits.
+            </p>
+            <h4>
+                Sequential Editing with ROME
+            </h4>
+            <p>
+                The paper presents a final test of the re-implementation by performing sequential editing. The original ROME showed a sudden model collapse after encountering a disabling edit, but the new r-ROME maintained stable downstream performance and general abilities throughout sequential edits, thus validating the new implementation.
+            </p>
+        </section>
+
+        <section id="conclusion">
+            <h2>Conclusion</h2>
+            <p>
+                The research concludes that the original implementation of ROME led to unstable model edits and model collapse. The new implementation, r-ROME, avoids this and enables stable, scalable model edits. This allows for sequential editing without performance loss, marking a significant advancement in model editing techniques.
+            </p>
+        </section>
+
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 UC Berkeley. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

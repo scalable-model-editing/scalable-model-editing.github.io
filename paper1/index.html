@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Editing at Scale</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Model Editing at Scale: Impacts on Gradual and Catastrophic Forgetting</h1>
+        <!-- Include authors here if needed -->
+        <div class="contact-section">
+            <p class="names">Akshat Gupta, Anurag Rao, Gopala Anumanchipalli</p>
+            <p class="institution">UC Berkeley</p>
+            <p class="email">akshat.gupta@berkeley.edu</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="../">Home</a></li>
+            <li><a href="#abstract">Abstract</a></li>
+            <li><a href="#methods">Methods, Models, and Datasets</a></li>
+            <li><a href="#scalingROME">Scaling ROME</a></li>
+            <li><a href="#scalingMEMIT">Scaling MEMIT</a></li>
+            <li><a href="#conclusion">Conclusion</a></li>
+        </ul>
+    </nav>
+    <div class = "container">
+
+
+        <div class="paper-link-container">
+            <a href="https://arxiv.org/pdf/2401.07453.pdf" target="_blank" class="paper-link-button">Read Our Research Paper</a>
+        </div>
+
+
+        <section id="abstract">
+            <h2>Abstract</h2>
+            <p>Editing knowledge in large language models is
+                an attractive capability that allows us to correct
+                incorrectly learned facts during pre-training, as
+                well as update the model with an ever-growing
+                list of new facts. While existing model editing techniques have shown promise, they are
+                usually evaluated using metrics for reliability,
+                specificity and generalization over one or few
+                edits. We argue that for model editing to have
+                practical utility, we must be able to make multiple edits to the same model. With this in mind,
+                we evaluate current model editing methods at
+                scale, focusing on two state of the art methods
+                - ROME and MEMIT. With the lens of scalability, we evaluate model editing methods for
+                three crucial properties - editing proficiency,
+                fact forgetting and downstream performance.
+                We find that as a model is edited sequentially
+                with multiple facts, it continually becomes less
+                editable, forgets previously edited facts and
+                loses the ability to perform downstream tasks.
+                For ROME and MEMIT, this "forgetting" happens in two phases - an initial gradual but progressive forgetting phase followed by an abrupt
+                or catastrophic forgetting. Both gradual and
+                catastrophic forgetting limit the usefulness of
+                model editing methods at scale - the former
+                makes model editing less effective as multiple
+                edits are made to the model while the latter caps
+                the scalability of such model editing methods.
+                Our analysis also highlights other key limitations of ROME and MEMIT at scale. With our
+                work, we push for better evaluation of model
+                editing and development of model editing methods keeping scalability in mind.</p>
+        </section>
+
+        <section id="methods">
+            <h2>Methods, Models, and Datasets</h2>
+            <p> We evaluated prominent model editing methods: ROME and MEMIT, alongside MEND and fine-tuning, using GPT2-XL and GPT-J models. The CounterFact dataset, with its naturalistic prompts and counterfactual data, was selected for testing due to its challenging nature, better reflecting real-world conditions for model editing.
+            </p>
+        </section>
+
+        <section id="scalingROME">
+            <h2>Scaling ROME</h2>
+            <p>ROME showed initial success in sequentially editing facts within models. However, we observed that over time, edits became less effective, leading to both a gradual forgetting of previously edited facts and an inability to retain model performance. This indicates that edits are not as focused as once thought and can inadvertently affect unrelated information in the model.</p>
+            <img src="Screenshot 2024-03-12 at 12.03.49 AM.png" alt="Editing Proficiency Chart">
+            <img src="Screenshot 2024-03-12 at 12.04.42 AM.png" alt="Downstream Performance Chart">
+            <img src="Screenshot 2024-03-12 at 12.05.09 AM.png" alt="Scaling ROME Chart">
+        </section>
+
+        <section id="scalingMEMIT">
+            <h2>Scaling MEMIT</h2>
+            <p>MEMIT displayed a similar pattern to ROME in editing proficiency, with a slightly lower success rate in initial edits. Notably, MEMIT sustained longer periods of gradual memory retention before reaching catastrophic forgetting and affected fewer facts, suggesting greater resilience in maintaining model stability over multiple edits.</p>
+            <img src="Screenshot 2024-03-12 at 12.05.36 AM.png" alt="Scaling MEMIT Chart">
+        </section>
+
+        <section id="conclusion">
+            <h2>Conclusion</h2>
+            <p>Our analysis revealed that while ROME and MEMIT are superior at scale compared to other methods, they encounter significant setbacks with gradual and abrupt forgetting, hindering their practical application. To ensure model editing methods are truly scalable, they must not only be effective in updating facts but also maintain the model's overall capabilities and knowledge retention.</p>
+        </section>
+
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 UC Berkeley. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
