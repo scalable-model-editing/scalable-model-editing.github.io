@@ -11,7 +11,7 @@ h2 {
 }
 
 header {
-    background: #054420;
+    background: #5b7db1;
     color: #fff;
     padding: 30px 20px;
     text-align: center;
@@ -52,7 +52,7 @@ nav ul li a {
 
 nav ul li a:hover,
 nav ul li a:focus {
-    background-color: #069c48;
+    background-color: #5b7db1;
 }
 
 section {
@@ -80,7 +80,7 @@ img {
 
 /* Additional styles for button-like links */
 a.button {
-    background-color: #069c48;
+    background-color: #5b7db1;
     padding: 10px 15px;
     color: white;
     border-radius: 5px;
@@ -112,7 +112,7 @@ a.button:hover {
 }
 
 .paper-link-button {
-    background-color: #2c6b47; /* This matches the header color in your screenshots */
+    background-color: #5b7db1; /* This matches the header color in your screenshots */
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
@@ -188,9 +188,9 @@ header, nav, section, footer {
 }
 
 .card {
-    flex: 1; /* Each card takes up equal space */
+    flex: 1; /* Each card will take up equal space */
     max-width: calc(50% - 10px); /* Adjust width for space between cards */
-    background-color: #036b30; /* Card background color */
+    background-color: #5b7db1; /* Card background color */
     color: white; /* Text color */
     text-align: center; /* Center text horizontally */
     margin: 10px;
@@ -200,12 +200,6 @@ header, nav, section, footer {
     display: flex; /* Use flex layout to center content */
     align-items: center; /* Center content vertically */
     justify-content: center; /* Center content horizontally */
-    padding: 20px;
-    transition: background-color 0.3s ease; /* Smooth transition for background color change */
-}
-
-.card:hover {
-    background-color: #047b4a; /* Slightly lighter or darker green on hover */
 }
 
 .card-content {
@@ -218,7 +212,9 @@ header, nav, section, footer {
     padding: 20px 0; /* Padding for spacing inside the card */
     text-align: center;
 }
-
+.card:hover {
+    background-color: #77a4e7; /* Change card hover color to gray */
+}
 /* Ensure the cards don't get too small on smaller screens */
 @media (max-width: 600px) {
     .card {
