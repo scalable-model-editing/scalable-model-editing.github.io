@@ -221,3 +221,12 @@ header, nav, section, footer {
         max-width: 100%;
     }
 }
+
+.profile {
+    display: inline-block; /* Display profiles inline */
+    width: 25%; /* Set width to 25% for 4 profiles per row */
+    text-align: center; /* Center align content */
+}
+.names {
+    color: black; /* Set text color to black */
+}

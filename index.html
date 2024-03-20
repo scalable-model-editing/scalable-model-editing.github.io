@@ -9,6 +9,13 @@
     <header>
         <h1>Large-Scalable Reliable Model Editing</h1>
     </header>
+    <nav>
+        <ul>
+            <li><a href="#papers">List of Papers</a></li>
+            <li><a href="#team">Team</a></li>
+            <li><a href="#learn">Learning Model Editing</a></li>
+        </ul>
+    </nav>
 
     <div class = "container">
 
@@ -16,7 +23,9 @@
                 <h2>Introduction</h2>
                 <p>The project focuses on the advancement of model editing techniques for large language models, specifically examining their scalability and reliability when subject to multiple edits. Through rigorous testing on two prominent editing methods, ROME and MEMIT, the research uncovers that while these methods show promise in singular edits, their efficacy diminishes with scaling. The studies reveal the phenomena of both gradual and catastrophic forgetting, where the models progressively lose their ability to recall edited facts and perform tasks, eventually leading to a state where further editing becomes ineffective, and the model is rendered almost unusable. This work underscores the necessity for better evaluation metrics and methods that can handle extensive editing, maintaining the stability and utility of LLMs over time.</p>
             </section>
-            <section class="card-container">
+            <h2>Papers</h2>
+            <section id="papers" class="card-container">
+
                 <a href="paper1/index.html" class="card">
                     <div class="card-content">
                         <h2>Model Editing at Scale: Impacts on Gradual and Catastrophic Forgetting</h2>
@@ -27,6 +36,54 @@
                         <h2>Rebuilding ROME: Resolving Model Collapse during Sequential Model Editing</h2>
                     </div>
                 </a>
+            </section>
+            <section id="team">
+                <h2>Team</h2>
+                <div class="contact-section">
+                    <div class="profile">
+                        <img src="Akshat Gupta LinkedIn.jpeg" alt="Akshat Gupta Profile Picture" style="width: 100px;">
+                        <p class="names">Akshat Gupta</p>
+                    </div>
+                    <!-- <div class="profile">
+                        <img src="placeholder.jpg" alt="Profile Picture" style="width: 100px;">
+                        <p class="names">Name</p>
+                    </div>
+                    <div class="profile">
+                        <img src="placeholder.jpg" alt="Profile Picture" style="width: 100px;">
+                        <p class="names">Name</p>
+                    </div>
+                    <div class="profile">
+                        <img src="placeholder.jpg" alt="Profile Picture" style="width: 100px;">
+                        <p class="names">Name</p>
+                    </div> -->
+                </div>
+            </section>
+
+            <section id="learn">
+                <h2>Learning Model Editing</h2>
+                <div class="papers-list">
+                    <h3>BASIC METHODS FOR MODEL EDITING</h3>
+                    <ul>
+                        <li><a href="#">Transformer Feed-Forward Layers Are Key-Value Memories</a></li>
+                        <li><a href="#">Editing Factual Knowledge in Language Models</a></li>
+                        <li><a href="#">Knowledge Neurons in Pretrained Transformers</a></li>
+                        <li><a href="#">MEND - Fast Model Editing at Scale</a></li>
+                        <li><a href="#">Do Language Models Have Beliefs? Methods for Detecting, Updating, and Visualizing Model Beliefs</a></li>
+                        <li><a href="#">ROME - Locating and Editing Factual Associations in GPT</a></li>
+                        <li><a href="#">SERAC - Memory-Based Model Editing at Scale</a></li>
+                        <li><a href="#">MEMIT - Mass-Editing Memory in a Transformer</a></li>
+                    </ul>
+                    <h3>BASIC ANALYSIS PAPERS FOR MODEL EDITING</h3>
+                    <ul>
+                        <li><a href="#">Does Localization Inform Editing?</a></li>
+                        <li><a href="#">Editing Large Language Models: Problems, Methods, and Opportunities</a></li>
+                        <li><a href="#">MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions</a></li>
+                        <li><a href="#">Detecting Edit Failures In Large Language Models: An Improved Specificity Benchmark</a></li>
+                        <li><a href="#">Evaluating the Ripple Effects of Knowledge Editing in Language Models</a></li>
+                        <li><a href="#">Unveiling the Pitfalls of Knowledge Editing for Large Language Models</a></li>
+                        <li><a href="#">Model Editing at Scale leads to Gradual and Catastrophic Forgetting</a></li>
+                    </ul>
+                </div>
             </section>
 
 
