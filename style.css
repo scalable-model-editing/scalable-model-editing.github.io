@@ -1,59 +1,88 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family:"Helvetica Neue","Helvetica","Arial",sans-serif;
     color: #333;
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background: #fff;
+    background: #f0f2f5;
 }
+
 h2 {
     text-align: center;
+    font-size: 1.5em;
+    margin-top: -20px;
+}
+
+.title-separator {
+    border-top: 1px solid #000; /* Solid line with a height of 2px */
+    margin-top: 1%; /* Space above the line */
+    margin-bottom: 0px; /* Space below the line */
 }
 
 header {
-    background: #5b7db1;
-    color: #fff;
+    background: #f0f2f5;
+    color: #000000;
     padding: 30px 20px;
     text-align: center;
+    margin-bottom: -40px
 }
 
 header h1 {
-    margin: 0;
-    font-size: 2.5em;
+    margin: 1;
+    font-size: 2.5em !important;
 }
 
 header p {
+    margin-top: -20px;
     color: #ddd;
 }
 
 nav {
-    background: #333;
-    color: #fff;
+    background: #f0f2f5;
+    color: #353030;
+    padding: 10px 20px; /* Add padding to give some space inside the nav */
 }
 
 nav ul {
     list-style: none;
-    overflow: hidden;
-    padding: 0;
-    text-align: center;
     margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center; /* Use center for vertical alignment */
+    justify-content: space-between; /* Aligns logo to the left and nav items to the right */
 }
 
 nav ul li {
-    display: inline;
+    padding: 10px 20px;
 }
 
 nav ul li a {
     text-decoration: none;
-    color: #fff;
-    padding: 10px 20px;
-    display: inline-block;
+    color: #383232;
+    display: block; /* Makes the anchor fill the li for better click area */
 }
 
 nav ul li a:hover,
 nav ul li a:focus {
-    background-color: #5b7db1;
+    background-color: #dddddd;
 }
+
+.nav-logo {
+    padding-right: 0; /* Remove padding if you want the logo to be flush with the edge */
+}
+
+.nav-logo img {
+    width: 200px; /* Set the logo width */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* This is to ensure the navigation links are on the right */
+.nav-links {
+    display: flex;
+    gap: 20px; /* This sets the space between navigation items */
+}
+
+
 
 section {
     padding: 20px;
@@ -133,7 +162,7 @@ a.button:hover {
     max-width: 1200px; /* This sets the maximum width of the container */
     margin: 0 auto; /* Centers the container */
     padding: 20px; /* Optional: Adds some space inside the container */
-    background-color: #fff; /* Optional: Sets the background color */
+    background-color: #f0f2f5; /* Optional: Sets the background color */
 }
 
 /* Add this to each section if they are not already wrapped in the container */
@@ -229,4 +258,40 @@ header, nav, section, footer {
 }
 .names {
     color: black; /* Set text color to black */
+}
+
+#papers {
+    /* Assuming you want the papers list to take the full container width */
+    width: 100%;
+    text-align: left; /* Aligns the text to the left */
+    font-weight: normal;
+}
+
+.papers-title {
+    text-align: left;
+    margin-top: -15px;
+    /* Any other styling you need */
+}
+
+.paper {
+    /* Style your paper divs here */
+    margin-bottom: 1em; /* Add space between paper entries */
+    text-align: left; /* Aligns the text to the left */
+    font-weight: normal;
+}
+
+.paper h2 {
+    font-size: 1em; /* Keep your font size as is */
+    font-weight: normal; /* This will make the title not bold */
+    margin: 0; 
+    text-align:left;
+}
+
+.paper h2 a {
+    text-decoration: none; /* Removes underline from links */
+    color: #222222; /* Sets the text color; choose what fits your design */
+}
+
+.paper h2 a:hover {
+    text-decoration: underline; 
 }

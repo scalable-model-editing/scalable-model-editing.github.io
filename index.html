@@ -1,52 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Head elements -->
     <link rel="stylesheet" href="style.css">
     <title>Research Projects</title>
 </head>
+
 <body>
-    <header>
-        <h1>Large-Scalable Reliable Model Editing</h1>
-    </header>
     <nav>
         <ul>
-            <li><a href="#papers">List of Papers</a></li>
-            <li><a href="team.html">Team</a></li>
-            <li><a href="learn_model_editing.html">Learning Model Editing</a></li>
+            <li class="nav-logo"><img src="BAIR.png" alt="Logo"></li>
+            <div class="nav-links">
+                <li><a href="#papers">List of Papers</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="learn_model_editing.html">Learning Model Editing</a></li>
+            </div>
         </ul>
+        <div class="title-separator"></div>
     </nav>
-
-    <div class = "container">
-
-            <section id="introduction">
-                <h2>Introduction</h2>
-                <p>The project focuses on the advancement of model editing techniques for large language models, specifically examining their scalability and reliability when subject to multiple edits. Through rigorous testing on two prominent editing methods, ROME and MEMIT, the research uncovers that while these methods show promise in singular edits, their efficacy diminishes with scaling. The studies reveal the phenomena of both gradual and catastrophic forgetting, where the models progressively lose their ability to recall edited facts and perform tasks, eventually leading to a state where further editing becomes ineffective, and the model is rendered almost unusable. This work underscores the necessity for better evaluation metrics and methods that can handle extensive editing, maintaining the stability and utility of LLMs over time.</p>
-            </section>
-            <h2>Papers</h2>
-            <section id="papers" class="card-container">
-
-                <a href="paper1/index.html" class="card">
-                    <div class="card-content">
-                        <h2>Model Editing at Scale: Impacts on Gradual and Catastrophic Forgetting</h2>
-                    </div>
-                </a>
-                <a href="paper2/index.html" class="card">
-                    <div class="card-content">
-                        <h2>Rebuilding ROME: Resolving Model Collapse during Sequential Model Editing</h2>
-                    </div>
-                </a>
-            </section>
-
-
-
-
-
+    <div class="title">
+        <header>
+            <h1>Large-Scalable Reliable Model Editing</h1>
+        </header>
+    </div>
+`
+    <div class="container">
+        <section id="introduction">
+            <p>The project focuses on the advancement of model editing techniques for large language models, specifically examining their scalability and reliability when subject to multiple edits. Through rigorous testing on two prominent editing methods, ROME and MEMIT, the research uncovers that while these methods show promise in singular edits, their efficacy diminishes with scaling. The studies reveal the phenomena of both gradual and catastrophic forgetting, where the models progressively lose their ability to recall edited facts and perform tasks, eventually leading to a state where further editing becomes ineffective, and the model is rendered almost unusable. This work underscores the necessity for better evaluation metrics and methods that can handle extensive editing, maintaining the stability and utility of LLMs over time.</p>
+        </section>
+        <section id="papers">
+            <h2 class="papers-title">Papers</h2>
+            <div class="paper">
+                <h2><a href="paper1/index.html">Model Editing at Scale: Impacts on Gradual and Catastrophic Forgetting</a></h2>
+            </div>
+            <div class="paper">
+                <h2><a href="paper2/index.html">Rebuilding ROME: Resolving Model Collapse during Sequential Model Editing</a></h2>
+            </div>
+            <div class="paper">
+                <h2><a href="paper3/index.html">A Unified Framework for Model Editing</a></h2>
+            </div>
+            <div class="paper">
+                <h2><a href="paper4/index.html">Is Bigger Edit Batch Size Always Better?- An Empirical Study on Model Editing with Llama-3</a></h2>
+            </div>
+        </section>
     </div>
 
     <footer>
         <p>&copy; 2024 UC Berkeley. All rights reserved.</p>
     </footer>
-
 </body>
 </html>
+

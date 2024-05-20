@@ -1,0 +1,200 @@
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Large-Scale Reliable Model Editing</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+
+    <header>
+        <h1>A Unified Framework for Model Editing</h1>
+        <!-- Include authors here if needed -->
+        <div class="contact-section">
+            <p class="names">Akshat Gupta, Dev Sajnani, Gopala Anumanchipalli</p>
+            <p class="institution">UC Berkeley</p>
+            <p class="email">{akshat.gupta, sajnanidev, gopala}@berkeley.edu</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="#abstract">Abstract</a></li>
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#background">Background</a></li>
+            <li><a href="#Preservation-Memorization">Preservation-Memorization</a></li>
+            <li><a href="#Edit-Distribution Algorithms">Edit-Distribution Algorithms</a></li>
+            <li><a href="#Introducing EMMET">Introducing EMMET</a></li>
+            <li><a href="#Conclusion">Conclusion</a></li>
+            <li><a href="#Limitation">Limitation</a></li>
+        </ul>
+    </nav>
+    <div class = "container">
+
+
+        <div class="paper-link-container">
+            <a href="https://arxiv.org/pdf/2403.14236.pdf" target="_blank" class="paper-link-button">Read Our Research Paper</a>
+        </div>
+
+
+        <section id="abstract">
+            <h2>Abstract</h2>
+            <p>We introduce a unifying framework that brings two leading "locate-and-edit" model editing techniques – ROME and MEMIT – under a single conceptual umbrella, optimizing for the same goal, which we call the preservationmemorization objective. ROME uses an equality constraint to perform one edit at a time, whereas MEMIT employs a more flexible least-square constraint that allows for batched edits. Following the preservationmemorization objective, we present Equalityconstrained Mass Model Editing algorithm for Transformers or EMMET, a new batched memory-editing algorithm that uses a closedform solution for the equality-constrained version of the preservation-memorization objective. EMMET is a batched-version of ROME and is able to perform batched-edits up to a batch-size of 10,000 with very similar performance to MEMIT across multiple dimensions. With EMMET, weunify and achieve symmetry within the "locate-and-edit" algorithms, allowing batched-editing using both objectives.</p>
+        </section>
+
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p>
+                The paper by Yao et al. (2023) explores advancements in model editing for transformer-based language models, focusing on two methods: ROME and MEMIT. These methods update models directly, with MEMIT allowing for batched edits. A unified conceptual framework, the preservation-memorization objective, is introduced, along with EMMET, an algorithm for large-scale batched editing. The research highlights significant improvements in how models are edited, with potential implications for further advancements in model editing techniques.
+            </p>
+            <img src="Screenshot 2024-05-20 at 16.23.24.png">
+
+        </section>
+
+        <section id="background">
+            <h2>Background</h2>
+            <p>In the context of model editing for language models, facts are represented as key-value pairs where the key vector corresponds to the fact retrieval and the value vector manipulates the model's output layer to produce a desired result. For example, inserting the fact "The president of USA is John Cena" involves editing specific vector representations to generate "John Cena" as an output. The success of these edits is measured through various metrics: Efficacy Score (ES) assesses if the new fact overtakes the old in model responses; Paraphrase Score (PS) checks the edit's generalization across different phrasings; Neighborhood Score (NS) gauges the edit's impact on nearby facts; Generation Entropy (GE) evaluates the fluency and diversity of the generated text; and a combined Score (S) uses these to provide a holistic measure of editing success.</p>
+            <img src="Screenshot 2024-05-20 at 16.23.46.png">
+        </section>
+
+        <section id="Preservation-Memorization">
+            <h2>Preservation-Memorization: A Unifying Framework for ROME and MEMIT</h2>
+            <p>The goal is to preserve the representations of selected input vectors before and after editing while ensuring that the output representation of new key vectors matches the desired output. This ROME-style objective can be formulated as:</p>
+            <div class="equation">
+                \( \arg\min_{\hat{W}} \| \hat{W} K_0 - W_0 K_0 \| \quad \text{(preservation)} \) <br>
+                \( \text{s.t.} \quad \hat{W} k_e = v_e \quad \text{(memorization)} \)
+            </div>
+            <p>And the solution for ROME can then be written as:</p>
+            <div class="equation">
+                \( \hat{W} = W_0 + \Delta \) <br>
+                \( \Delta = (v_e - W_0 k_e) \frac{k_e^T C_0^{-1}}{k_e^T C_0^{-1} k_e} \)
+            </div>
+            <p>On the other hand, MEMIT-style objective can be formulated as:</p>
+            <div class="equation">
+                \( \arg\min_{\hat{W}} \lambda \| \hat{W} K_0 - W_0 K_0 \| + \| \hat{W} K_E - V_E \| \)
+            </div>
+            <p>And the solution for MEMIT can then be written as:</p>
+            <div class="equation">
+                \( \Delta^l = (V_E^L - W_0^l K_E^l) \frac{K_E^{lT} (C_0^l + K_E^l K_E^{lT})^{-1}}{L - l + 1} \)
+            </div>
+        </section>
+        
+
+        <section id="Edit-Distribution Algorithms">
+            <h2>Edit-Distribution Algorithms</h2>
+            <p>The difference in objectives is not the only distinction between ROME and MEMIT. MEMIT also distributes edits into multiple layers, contributing to its success with large batch sizes. This distribution uses the formula:</p>
+            <div class="equation">
+                \( \Delta^l = \left( \frac{V_E^L - W_0^l K_E^l}{L - l + 1} \right) K_E^{lT} \left( C_0^l + K_E^l K_E^{lT} \right)^{-1} \)
+            </div>
+            <p>This algorithm is separate from the ROME and MEMIT objectives, allowing for its application with ROME or using MEMIT without distributing edits across multiple layers. The formula for applying MEMIT's edit-distribution algorithm to ROME is:</p>
+            <div class="equation">
+                \( \Delta^l = (v_e^L - W_0^l k_e^l) \frac{k_e^{lT} C_0^{l-1}}{k_e^{lT} C_0^{l-1} k_e^l} \)
+            </div>
+            <h4>
+                Impact of edit-distribution Algorithms
+            </h4>
+            <p>The key advantage of the edit-distribution algorithm is evident when making batched edits. Two experiments were conducted to analyze this:</p>
+                <p>1. Single Edits Comparison: ROME and MEMIT were compared with and without edit distribution on 1,000 randomly selected facts from the CounterFact dataset across three models: GPT2-XL, GPT-J, and Llama-2-7B. The results showed that both ROME and MEMIT perform equally well for single edits without needing multiple layers.</p>
+                2. Batched Editing Comparison: MEMIT was compared with and without edit distribution for batched edits. The results demonstrated that MEMIT could successfully handle larger batch sizes with the edit-distribution algorithm, improving performance for batch sizes up to 1,024 for GPT2-XL, 256 for Llama-2-7B, and 4,096 for GPT-J when distributing edits across multiple layers.</p>
+            <img src="Screenshot 2024-05-20 at 19.21.32.png">
+
+        </section>
+
+        <section id="Introducing EMMET">
+            <h2>Introducing EMMET</h2>
+            <p>EMMET provides a closed-form solution for batched-editing under equality constraints, creating a batched version of ROME.</p>
+            <p>According to the preservation-memorization objective, we want to find new weights \( \hat{W} \) for a weight matrix \( W_0 \) such that:</p>
+            <div class="equation">
+                \( \arg\min_{\hat{W}} \| \hat{W} K_0 - W_0 K_0 \| \quad \text{(preservation)} \) <br>
+                \( \text{s.t.} \quad \hat{W} k_e^i = v_e^i \quad \forall i \in [1, 2, ..., E] \quad \text{(memorization)} \)
+            </div>
+            <p>This equation is solved using Lagrange multipliers. The Lagrangian for multiple equality constraints is:</p>
+            <div class="equation">
+                \( L(\hat{W}, \lambda_i) = \frac{1}{2} \| \hat{W} K_0 K_0^T \hat{W}^T - \hat{W} K_0 K_0^T W_0^T + \frac{1}{2} W_0 K_0 K_0^T W_0^T - \sum_{i=1}^E \lambda_i^T (\hat{W} k_e^i - v_e^i) \)
+            </div>
+            <p>To solve this system of equations, we set \( \frac{\delta L}{\delta \hat{W}} = 0 \):</p>
+            <div class="equation">
+                \( \hat{W} K_0 K_0^T = W_0 K_0 K_0^T + \sum_{i=1}^E \lambda_i k_e^i \) <br>
+                \( (\hat{W} - W_0) K_0 K_0^T = \sum_{i=1}^E \lambda_i k_e^i = \Lambda K_E^T \)
+            </div>
+            <p>where \( \Lambda = [\lambda_1 \mid \lambda_2 \mid ... \mid \lambda_E] \) and \( K_E = [k_e^1 \mid k_e^2 \mid ... \mid k_e^E] \). Setting \( K_0 K_0^T = C_0 \) (assuming \( C_0 \) is invertible), the update equation for EMMET is:</p>
+            <div class="equation">
+                \( \hat{W} = W_0 + \Lambda K_E^T C_0^{-1} \)
+            </div>
+            <p>The unknown matrix of Lagrange multipliers (\(\Lambda\)) is found using the constraint \( \hat{W} K_E = V_E \):</p>
+            <div class="equation">
+                \( \Lambda = (V_E - W_0 K_E)(K_E^T C_0^{-1} K_E)^{-1} \)
+            </div>
+            <p>Replacing the above equation in the update equation gives us:</p>
+            <div class="equation">
+                \( \hat{W} = W_0 + \Delta \) <br>
+                \( \Delta = (V_E - W_0 K_E) K_E^T C_0^{-1} (K_E^T C_0^{-1} K_E)^{-1} K_E^T C_0^{-1} \)
+            </div>
+            <p>When \( E = 1 \), the \( K_E \) matrix reduces to a single vector \( k_e \), and the equation reduces to the ROME update equation (Equation 5). EMMET unifies ROME and MEMIT under the preservation-memorization objective, allowing for both batched and singular edits using equality constraints for memorization, similar to MEMIT's least-square based memorization.</p>
+            <img src="Screenshot 2024-05-20 at 19.46.00.png">
+            <img src="Screenshot 2024-05-20 at 19.47.11.png">
+            <h4>
+                Stabilizing EMMET
+            </h4>
+            <p>
+                EMMET and MEMIT invert two critical matrices: \( C_0 = K_0 K_0^T \) and \( D = K_E^T C_0^{-1} K_E \). While invertibility is assumed, it's not always guaranteed. \( C_0 \) is a sum of outer products of key-vectors. For an LLM of dimension \( d \), key-vector dimensionality is usually \( 4d \). Thus, \( C_0 \) is invertible if it includes at least \( 4d \) independent vectors.
+            </p>
+            <p>
+                Example: For Llama-2-7b with a hidden dimension of 4096, key vectors have a dimensionality of 16384. Therefore, preserving at least 16384 independent key-vectors ensures \( C_0 \) is invertible. In practice, preserving a larger number of vectors almost always satisfies this condition.
+            </p>
+            <p>
+                \( D \) is a square matrix of dimensionality equal to the number of edits. If \( C_0 \) is invertible, \( D \) is invertible if \( K_E \) is full-rank, meaning all key-vectors for memorized facts are independent. Non-independent keys can be removed from batches to ensure invertibility. Although \( D \) is not usually non-invertible in practice, it often becomes ill-conditioned, leading to instability in numerical computations.
+            </p>
+            <p>
+                To counteract instability, \( D \) is modified to \( D + \alpha I \), with \( \alpha \) set to 0.1 based on ablation studies over various batch sizes. This adjustment ensures stable batched edits using EMMET.
+            </p>
+            <h4>
+                Batch Editing with EMMET
+            </h4>
+            <p>
+                Experiments with EMMET on models like GPT2-XL, GPT-J, and Llama-2-7b show its performance across various batch sizes on datasets like CounterFact and zsRE. EMMET and MEMIT perform similarly on single-layer edits, with MEMIT slightly outperforming for Llama-2-7b.
+            </p>
+            <p>
+                Applying MEMIT's edit-distribution to EMMET shows slight performance improvements for EMMET on Llama-2-7b. Both algorithms successfully handle batched edits up to 10,000, leading to similar model degradation.
+            </p>
+            <p>
+                Downstream task evaluations using the GLUE benchmark and linguistic acceptability classification reveal similar degradation for both EMMET and MEMIT.
+            </p>
+            <p>
+                EMMET's theoretically stronger memorization constraint does not significantly improve editing efficacy over MEMIT, indicating potential limits of model editing under the preservation-memorization objective. EMMET remains a significant step in unifying model editing techniques, despite not outperforming MEMIT. Both methods exhibit robust performance and similar model degradation across large batch sizes.
+            </p>
+            <img src="Screenshot 2024-05-20 at 19.51.36.png">
+        </section>
+
+        <section id="Conclusion">
+            <h2>Conclusion</h2>
+            <p>This paper unites two popular model editing techniques, ROME and MEMIT, under the preservation-memorization objective. ROME performs equality-constrained edits, while MEMIT operates under a least-square constraint. The paper disentangles the edit-distribution algorithm in MEMIT from its optimization objective, emphasizing that future comparisons with MEMIT should focus on the objective rather than the algorithm. Additionally, the paper introduces EMMET (Equality-constrained Mass Model Editing in a Transformer), a new batched-editing algorithm based on the preservation-memorization objective with equality constraints for batched-memorization. Experiments show that EMMET performs similarly to MEMIT across various metrics, unifying model editing under the preservation-memorization framework. This unifying framework aims to improve the understanding of these algorithms and encourage future research based on both intuition and mathematics.
+            </p>
+        </section>
+
+        <section id="Limitation">
+            <h2>Limitation & Ethical Consideration</h2>
+            <p>This paper unites two popular model editing techniques, ROME and MEMIT, under the preservation-memorization objective. ROME performs equality-constrained edits, while MEMIT operates under a least-square constraint. The paper disentangles the edit-distribution algorithm in MEMIT from its optimization objective, emphasizing that future comparisons with MEMIT should focus on the objective rather than the algorithm. Additionally, the paper introduces EMMET (Equality-constrained Mass Model Editing in a Transformer), a new batched-editing algorithm based on the preservation-memorization objective with equality constraints for batched-memorization. Experiments show that EMMET performs similarly to MEMIT across various metrics, unifying model editing under the preservation-memorization framework. This unifying framework aims to improve the understanding of these algorithms and encourage future research based on both intuition and mathematics.</p> 
+            <p>While our technique streamlines error correction processes, it does not address deeper structural limitations within models, such as amplifying existing errors or introducing new inaccuracies. The effectiveness of our method varies with the model architecture and the nature of the edited knowledge. Despite a theoretically stronger memorization objective, EMMET does not outperform MEMIT, indicating a potential saturation point for model editing with current approaches. This underscores the need for further research into edit distribution and its implications. Our work enhances understanding of model behavior but must be interpreted with awareness of these limitations. </p>
+            <p>While our model editing method effectively corrects errors or updates facts in models, it raises concerns about potential misuse, such as inserting harmful or false knowledge. Therefore, LLMs should not be considered reliable knowledge bases, and caution is warranted in their use.</p>
+        </section>
+        
+        
+        
+
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 UC Berkeley. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

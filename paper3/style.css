@@ -10,7 +10,7 @@ body {
 h1, h2, h3, p {
     margin-bottom: 5px;
 }
-h2, h4 {
+h2 {
     font-weight: normal;
     color: darkblue;
 }
@@ -118,6 +118,12 @@ nav ul li a:focus {
 .button:hover {
     background-color: #2874a6; /* Darker blue on hover */
 }
+
+.equation {
+    text-align: center;
+    margin: 20px 0;
+}
+
 
 /* Image styles */
 img {

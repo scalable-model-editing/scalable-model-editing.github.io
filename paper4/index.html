@@ -1,0 +1,181 @@
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Large-Scale Reliable Model Editing</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+
+    <header>
+        <h1>Is Bigger Edit Batch Size Always Better?- An Empirical Study on Model Editing with Llama-3</h1>
+        <!-- Include authors here if needed -->
+        <div class="contact-section">
+            <p class="names">Junsang Yoon, Akshat Gupta, Gopala Anumanchipalli</p>
+            <p class="institution">UC Berkeley</p>
+            <p class="email">{junyoon, akshat.gupta, gopala}@berkeley.edu</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="#abstract">Abstract</a></li>
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#background">Background</a></li>
+            <li><a href="#experiments">Experiments</a></li>
+            <li><a href="#conclusion">Conclusion</a></li>
+        </ul>
+    </nav>
+    <div class = "container">
+
+
+        <div class="paper-link-container">
+            <a href="https://arxiv.org/pdf/2405.00664.pdf" target="_blank" class="paper-link-button">Read Our Research Paper</a>
+        </div>
+
+
+        <section id="abstract">
+            <h2>Abstract</h2>
+            <p>This study presents a targeted model editing analysis focused on the latest large language model, Llama-3. We explore the efficacy of popular model editing techniques- ROME, MEMIT, and EMMET, which are designed for precise layer interventions. We identify the most effective layers for targeted edits through an evaluation that encompasses up to 4096 edits across three distinct strategies: sequential editing, batch editing, and a hybrid approach we call as sequential-batch editing. Our findings indicate that increasing edit batch-sizes may degrade model performance more significantly than using smaller edit batches sequentially for equal number of edits. With this, we argue that sequential model editing is an important component for scaling model editing methods and future research should focus on methods that combine both batched and sequential editing. This observation suggests a potential limitation in current model editing methods which push towards bigger edit batch sizes, and we hope it paves way for future investigations into optimizing batch sizes and model editing performance.</p>
+        </section>
+
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p> In the rapidly evolving field of artificial intelligence, keeping large language models (LLMs) up-to-date with the latest information is a major challenge. Traditional retraining methods are time-consuming and resource-intensive. Model editing, an alternative approach, allows for modifying stored facts and correcting inaccuracies without extensive retraining. Techniques like ROME, MEMIT, and EMMET optimize the preservation-memorization (PM) objective and can be applied to any transformer-based LLMs. This work presents a step-by-step guide for using these model editing methods on the new Llama-3 model. It explores singular edits, batched edits, and sequential-batched edits, comparing their performance. Findings suggest that sequential-batched editing with a batch size of 1024 provides optimal scaling performance and approaches the continual learning paradigm. This study establishes benchmarks for future research and outlines the decision-making process for model editing.
+            </p>
+        </section>
+
+        <section id="background">
+            <h2>Background</h2>
+            <h4>Preservation-Memorization Objective</h4>
+            <p>
+                Gupta et al. (2024b) demonstrate that both ROME and MEMIT optimize the same objective function, known as the preservation-memorization objective. This objective comprises two parts: a preservation term and a memorization term. ROME uses an equality-constrained optimization for memorization:
+            </p>
+            <div class="equation">
+                \( \arg\min_{\hat{W}} \| \hat{W} K_0 - W_0 K_0 \| \quad \text{preservation} \) <br>
+                \( \text{s.t.} \quad \hat{W} k_e = v_e \quad \text{memorization} \)
+            </div>
+            <p>
+                Here, \( W \) represents the weights of the feed-forward layer to edit, \( k \) is a key-vector representing a fact, \( v_e \) is the desired output, and \( K_0 \) is a matrix of facts to preserve. The ROME solution is:
+            </p>
+            <div class="equation">
+                \( \hat{W} = W_0 + \Delta \) <br>
+                \( \Delta = (v_e - W_0 k_e) \frac{k_e^T C_0^{-1}}{k_e^T C_0^{-1} k_e} \)
+            </div>
+            <p>
+                MEMIT optimizes the same objectives but uses a least-squares constraint for memorization, enabling closed-form solutions for batched edits:
+            </p>
+            <div class="equation">
+                \( \arg\min_{\hat{W}} \lambda \| \hat{W} K_0 - W_0 K_0 \| + \| \hat{W} K_E - V_E \| \)
+            </div>
+            <p>
+                In this context, a fact is represented by a pair of key (\( k_e \)) and value (\( v_e \)) vectors. The MEMIT solution is:
+            </p>
+            <div class="equation">
+                \( \hat{W} = W_0 + \Delta \) <br>
+                \( \Delta = (V_E - W_0 K_E) K_E^T (\lambda C_0 + K_E K_E^T)^{-1} \)
+            </div>
+            <p>
+                Gupta et al. (2024b) also introduced EMMET, which allows for batched edits using an equality constraint for memorization:
+            </p>
+            <div class="equation">
+                \( \arg\min_{\hat{W}} \| \hat{W} K_0 - W_0 K_0 \| \quad \text{preservation} \) <br>
+                \( \text{s.t.} \quad \hat{W} k_e^i = v_e^i \quad \forall i \in [1, 2, ..., E] \quad \text{memorization} \)
+            </div>
+            <p>
+                The EMMET solution is:
+            </p>
+            <div class="equation">
+                \( \hat{W} = W_0 + \Delta \) <br>
+                \( \Delta = (V_E - W_0 K_E) K_E^T C_0^{-1} (K_E^T C_0^{-1} K_E)^{-1} K_E^T C_0^{-1} \)
+            </div>
+
+            <h4>Model editing metrics</h4>
+            <p>
+                Metrics to analyze the success of model edits are drawn from standard model editing metrics (Meng et al., 2022b; Yao et al., 2023):
+            </p>
+            <ul>
+                <li>
+                    <strong>Efficacy Score (ES):</strong> Measures the success of an edit within the model, determined by the percentage of cases where \( P(\text{new fact}) > P(\text{old fact}) \) for the query prompt.
+                </li>
+                <li>
+                    <strong>Paraphrase Score (PS):</strong> Evaluates a model’s ability to generalize after an edit, measured by the percentage where \( P(\text{new fact}) > P(\text{old fact}) \) under paraphrases of the query prompt.
+                </li>
+                <li>
+                    <strong>Neighborhood Score (NS):</strong> Represents the locality of model editing by measuring the impact of an edit on adjacent stored facts within the model. NS quantifies the percentage of nearby facts that remain unchanged after an edit, assessing the precision and isolation of the modifications.
+                </li>
+                <li>
+                    <strong>Composite Score (S):</strong> A holistic measure defined by Meng et al. (2022a), combining aspects of edit success, generalization, and locality. It is calculated as the harmonic mean of ES, PS, and NS, providing a comprehensive evaluation of the overall efficacy of model edits.
+                </li>
+            </ul>
+
+        </section>
+        
+
+        <section id="experiments">
+            <h2>Experiments</h2>
+            <h4>Finding Optimal Layer for Model Editing</h4>
+            <p>Meng et al. (2022b) found that the representation of the subject’s last token within the feed-forward networks (FFN) at intermediate layers is crucial for recalling facts in large language models (LLMs). Building on this, Meng et al. proposed treating linear layers as a key-value memory system to enhance memory recall by modifying effective hidden states. However, later work by Hase et al. (2024) showed that layers important during causal tracing did not always translate to improved model editing performance.
+
+                To determine the optimal layer for model editing, 1000 non-sequential edits from the CounterFact dataset were applied to each layer of the Llama-3 model. The effectiveness of these edits was evaluated using Efficacy Score (ES), Paraphrase Score (PS), and Neighborhood Score (NS). The layer with the highest harmonic mean score across these metrics was selected as the most suitable for targeted interventions.
+                
+                Findings indicate that layer 1 of Llama-3 consistently outperforms other layers across numerous metrics, a result consistent with previous findings for Llama-2. This contrasts with Yao et al. (2023), who suggested that layer 5 was optimal for Llama-2 model editing. Additionally, both MEMIT and ROME show similar performance across model layers, supporting the idea that while they optimize the same objective, their differing constraints have minor effects on editing performance. MEMIT's least-square constraint allows for a closed-form solution for batched editing, as extended by Gupta et al. (2024b) with EMMET.</p>
+            <img src="Screenshot 2024-05-20 at 20.13.35.png">
+            <img src="Screenshot 2024-05-20 at 20.18.01.png">
+
+            <h4>Batch Editing</h4>
+            <img src="Screenshot 2024-05-20 at 20.20.18.png">
+            <p>
+                After identifying the optimal layer (layer 1) for model editing, large-scale edits were performed on Llama-3 using batched editing with MEMIT and EMMET at various batch sizes (16, 64, 256, 1024, and 4096). Gupta et al. (2024b) suggested that editing multiple layers could obscure the effectiveness of model edits, so only a single layer was edited.
+            </p>
+            <p>
+                <i>Findings:</i>
+            </p>
+            <ul>
+                <li><i>MEMIT:</i>
+                    <ul>
+                        <li>Metrics tend to decline with larger batch sizes, particularly the Neighborhood Score (NS), indicating a significant impact on the locality of edits.</li>
+                        <li>Efficacy Score (ES) remains relatively resilient to edits.</li>
+                        <li>Paraphrase Score (PS) initially increases dramatically between batch sizes of 16 and 64, suggesting an area for further investigation.</li>
+                    </ul>
+                </li>
+                <li><i>EMMET:</i>
+                    <ul>
+                        <li>Similar to MEMIT, metrics generally fall with larger batches, with NS being the most affected.</li>
+                        <li>Overall, both MEMIT and EMMET show similar trends due to their analogous optimization objectives.</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>
+                These results highlight the need to mitigate impacts on locality when performing large-scale model edits.
+            </p>
+
+            <h4>Sequential Batch Editing</h4>
+            <p>Experiments show that as the batch size of edits increases, model editing performance decreases significantly, particularly for the Neighborhood Score (NS), indicating that larger batch sizes cause edits to affect other facts in the model. To address this, sequential editing, where facts are added one by one, is proposed as an alternative. Sequential-batched editing generalizes this idea by updating batches of facts sequentially, with batch sizes ranging from 1 to 4096.
+
+                Sequential edits with smaller batches outperform larger batch sizes in preserving model performance, with the worst performance observed for a batch size of 4096. Sequential edits better maintain the locality of edits, reducing the impact on adjacent stored facts. Both MEMIT and EMMET show similar trends, with an optimal batch size of 1024 providing the best balance. Increasing the batch size beyond this point leads to diminishing returns and greater model degradation, suggesting that sequential-batched editing with smaller batches is more effective for enhancing model accuracy and efficiency.</p>
+            <img src="Screenshot 2024-05-20 at 20.22.03.png">
+            <img src="Screenshot 2024-05-20 at 20.25.23.png">
+        </section>
+
+        <section id="conclusion">
+            <h2>Conclusion</h2>
+            <p>Our study examines several model editing techniques in the context of the newly released Llama3 model. Contrary to previous belief, our experiments show that earlier layers may be more optimal intervention points, and that smaller, frequent sequential batch size edits have a superior performance in comparison to larger batch sizes. Future work will include experiments on multi-layer intervention for edits, as well as experiments against other popular models and algorithms, including methods that are hyper-network based.</p>
+        </section>
+
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 UC Berkeley. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
