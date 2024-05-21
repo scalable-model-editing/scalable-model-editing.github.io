@@ -1,22 +1,30 @@
 body {
-    font-family:"Helvetica Neue","Helvetica","Arial",sans-serif;
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     color: #333;
     line-height: 1.6;
     margin: 0;
     padding: 0;
     background: #f0f2f5;
+    
 }
 
 h2 {
     text-align: center;
+    font-size: 1.8em;
+    margin-top: -20px;
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+h4 {
+    text-align: center;
     font-size: 1.5em;
     margin-top: -20px;
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }
 
 .title-separator {
-    border-top: 1px solid #000; /* Solid line with a height of 2px */
-    margin-top: 1%; /* Space above the line */
-    margin-bottom: 0px; /* Space below the line */
+    border-top: 1px solid #000;
+    margin-top: -1%;
+    margin-bottom: 0px;
 }
 
 header {
@@ -30,17 +38,19 @@ header {
 header h1 {
     margin: 1;
     font-size: 2.5em !important;
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }
 
 header p {
     margin-top: -20px;
     color: #ddd;
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }
 
 nav {
     background: #f0f2f5;
     color: #353030;
-    padding: 10px 20px; /* Add padding to give some space inside the nav */
+    padding: 10px 20px;
 }
 
 nav ul {
@@ -48,8 +58,8 @@ nav ul {
     margin: 0;
     padding: 0;
     display: flex;
-    align-items: center; /* Use center for vertical alignment */
-    justify-content: space-between; /* Aligns logo to the left and nav items to the right */
+    align-items: center;
+    justify-content: space-between;
 }
 
 nav ul li {
@@ -59,30 +69,62 @@ nav ul li {
 nav ul li a {
     text-decoration: none;
     color: #383232;
-    display: block; /* Makes the anchor fill the li for better click area */
+    display: block;
 }
 
 nav ul li a:hover,
 nav ul li a:focus {
     background-color: #dddddd;
 }
+html {
+    height: 100%; /* Make sure html and body are at least the height of the viewport */
+}
 
-.nav-logo {
-    padding-right: 0; /* Remove padding if you want the logo to be flush with the edge */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* viewport height */
+    margin: 0; /* Remove default margin */
+}
+
+.nav-logo,
+.nav-logo1 {
+    padding: 0;
+    margin: 0;
+}
+
+.nav-logo img,
+.nav-logo1 img {
+    height: auto;
 }
 
 .nav-logo img {
-    width: 200px; /* Set the logo width */
-    height: auto; /* Maintain aspect ratio */
+    width: 200px;
+}
+
+.nav-logo1 img {
+    width: 110px;
+}
+
+/* Flexbox container for logos */
+.nav-container {
+    display: flex;
+    align-items: center;
+    gap: -1px; /* Adjust the gap as needed */
 }
 
 /* This is to ensure the navigation links are on the right */
 .nav-links {
     display: flex;
-    gap: 20px; /* This sets the space between navigation items */
+    gap: 0px; /* Adjust this value as needed */
+    font-size: 1.1em;
+    /* font-weight: bold; */
 }
 
-
+nav ul li {
+    margin: -1 1px; /* Adjust the left and right margin as needed */
+    padding: 0px 0px;
+}
 
 section {
     padding: 20px;
@@ -90,10 +132,10 @@ section {
 }
 
 footer {
-    background-color: #333;
+    background-color: #000000;
     color: #fff;
     text-align: center;
-    padding: 20px;
+    padding: 100px;
     position: relative;
     bottom: 0;
     width: 100%;
@@ -107,7 +149,7 @@ img {
     margin: 10px 0;
 }
 
-/* Additional styles for button-like links */
+
 a.button {
     background-color: #5b7db1;
     padding: 10px 15px;
@@ -120,7 +162,6 @@ a.button:hover {
     background-color: #333;
 }
 
-/* Style for large screen sizes */
 @media (min-width: 768px) {
     header h1 {
         font-size: 3em;
@@ -141,7 +182,7 @@ a.button:hover {
 }
 
 .paper-link-button {
-    background-color: #5b7db1; /* This matches the header color in your screenshots */
+    background-color: #5b7db1;
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
@@ -155,80 +196,73 @@ a.button:hover {
     background-color: #333;
 }
 
-
-
 .container {
-    width: 70%; /* Adjust this percentage to control the width */
-    max-width: 1200px; /* This sets the maximum width of the container */
-    margin: 0 auto; /* Centers the container */
-    padding: 20px; /* Optional: Adds some space inside the container */
-    background-color: #f0f2f5; /* Optional: Sets the background color */
+    width: 70%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f2f5;
 }
 
-/* Add this to each section if they are not already wrapped in the container */
 header, nav, section, footer {
     padding: 20px;
-    box-sizing: border-box; /* Ensures padding is included in width */
+    box-sizing: border-box;
 }
 
-/* Use this class for the main content sections */
 .content-section {
-    background-color: #f4f4f4; /* Optional: Sets a different background color for content sections */
-    margin-bottom: 20px; /* Space between sections */
+    background-color: #f4f4f4;
+    margin-bottom: 20px;
     padding: 20px;
-    border-radius: 5px; /* Optional: Rounds corners of sections */
+    border-radius: 5px;
 }
-
 
 .contact-section {
     color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* This should match your body font */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
     padding: 20px 0;
-    margin-top: 20px; /* Adjust as necessary to fit your layout */
+    margin-top: 20px;
 }
 
 .contact-section .names {
-    font-size: 1.2em; /* Adjust size as needed */
+    font-size: 1.1em;
     margin: 0;
     padding: 0;
-    font-weight: bold; /* Makes the font bold */
+    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }
 
 .contact-section .institution {
-    font-size: 1.1em; /* Adjust size as needed */
+    font-size: 1.1em;
     margin: 0;
     padding: 0;
 }
 
 .contact-section .email {
-    font-size: 1em; /* Adjust size as needed */
+    font-size: 1em;
     margin: 0;
     padding: 0;
 }
-
-
 
 .card-container {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 20px; /* Adjust the space between the cards */
+    gap: 20px;
 }
 
 .card {
-    flex: 1; /* Each card will take up equal space */
-    max-width: calc(50% - 10px); /* Adjust width for space between cards */
-    background-color: #5b7db1; /* Card background color */
-    color: white; /* Text color */
-    text-align: center; /* Center text horizontally */
+    flex: 1;
+    max-width: calc(50% - 10px);
+    background-color: #5b7db1;
+    color: white;
+    text-align: center;
     margin: 10px;
-    text-decoration: none; /* Remove underline from links */
-    border-radius: 5px; /* Rounded corners for the card */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: Adds shadow for depth */
-    display: flex; /* Use flex layout to center content */
-    align-items: center; /* Center content vertically */
-    justify-content: center; /* Center content horizontally */
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .card-content {
@@ -236,15 +270,16 @@ header, nav, section, footer {
 }
 
 .card h2 {
-    font-size: 1.5em; /* Adjust font size as needed */
+    font-size: 1.5em;
     margin: 0;
-    padding: 20px 0; /* Padding for spacing inside the card */
+    padding: 20px 0;
     text-align: center;
 }
+
 .card:hover {
-    background-color: #77a4e7; /* Change card hover color to gray */
+    background-color: #77a4e7;
 }
-/* Ensure the cards don't get too small on smaller screens */
+
 @media (max-width: 600px) {
     .card {
         max-width: 100%;
@@ -252,46 +287,64 @@ header, nav, section, footer {
 }
 
 .profile {
-    display: inline-block; /* Display profiles inline */
-    width: 25%; /* Set width to 25% for 4 profiles per row */
-    text-align: center; /* Center align content */
-}
-.names {
-    color: black; /* Set text color to black */
+    display: inline-block;
+    width: 25%;
+    text-align: center;
 }
 
+.names {
+    color: black;
+}
+
+
 #papers {
-    /* Assuming you want the papers list to take the full container width */
-    width: 100%;
-    text-align: left; /* Aligns the text to the left */
-    font-weight: normal;
+    text-align: center; /* Center aligns the title and content within the section */
+}
+
+.papers-list {
+    list-style-type: disc; /* Adds bullets to the list */
+    padding: 0; /* Removes default padding */
+    display: inline-block; /* Allows the list to size according to its content */
+    text-align: left; /* Aligns the text within the list to the left */
+}
+
+.papers-list li {
+    margin: 10px 0; /* Adds a little space between list items */
+}
+
+.papers-list a {
+    text-decoration: underline; /* Underlines the links */
 }
 
 .papers-title {
+    text-align: center;
+    margin-top: -5px;
+    margin-bottom: -5px;
+}
+.news-title {
     text-align: left;
-    margin-top: -15px;
-    /* Any other styling you need */
+    margin-top: -5px;
+    margin-bottom: -5px;
 }
 
 .paper {
-    /* Style your paper divs here */
-    margin-bottom: 1em; /* Add space between paper entries */
-    text-align: left; /* Aligns the text to the left */
+    margin-bottom: 1em;
+    text-align: left;
     font-weight: normal;
 }
 
 .paper h2 {
-    font-size: 1em; /* Keep your font size as is */
-    font-weight: normal; /* This will make the title not bold */
-    margin: 0; 
-    text-align:left;
+    font-size: 1em;
+    font-weight: normal;
+    margin: 0;
+    text-align: left;
 }
 
 .paper h2 a {
-    text-decoration: none; /* Removes underline from links */
-    color: #222222; /* Sets the text color; choose what fits your design */
+    text-decoration: none;
+    color: #222222;
 }
 
 .paper h2 a:hover {
-    text-decoration: underline; 
+    text-decoration: underline;
 }
